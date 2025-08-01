@@ -4,12 +4,19 @@ const inputEmail = document.querySelector('.input-email')
 const inputNumber = document.querySelector('.input-number')
 const inputPassword = document.querySelector('.input-password')
 const buttonSave = document.querySelector('.button-save')
+const listDiv = document.querySelector('.list-div')
+const menuDiv = document.querySelector('.menu-div')
+const closeDiv = document.querySelector('.close-div')
+const buttonList = document.querySelector('.button-list')   
+const buttonClose = document.querySelector('.button-close')
 
 buttonSave.addEventListener('click', buttonSaveData)
+buttonList.addEventListener('click', buttonListOpen)
+buttonClose.addEventListener('click', buttonListClose)
 
 const SAVE_DATA = "saveData"
 
-const saveData = {}
+const saveData = []
 
 function buttonSaveData() {
     const inputNameValue = inputName.value.trim()
@@ -18,38 +25,80 @@ function buttonSaveData() {
     const inputNumberValue = inputNumber.value.trim()
     const inputPasswordValue = inputPassword.value.trim()
 
-    const isNameValid = inputNameValue.length >= 4 && inputNameValue.length <= 15
-    const isSurnameValid = inputSurNameValue.length >= 4 && inputSurNameValue.length <= 15
-    const isEmailValid = inputEmailValue.includes("@")
-    const isPasswordValid = inputPasswordValue.length >= 6
-    const isNumberValid = /^[0-9]{10,15}$/.test(inputNumberValue)
+    if (inputNameValue && inputSurNameValue && inputEmailValue && inputNumberValue && inputPasswordValue) {
+        const data = {
+            name: inputNameValue,
+            surname: inputSurNameValue,
+            email: inputEmailValue,
+            number: inputNumberValue,
+            password: inputPasswordValue
+        }
 
-    if (isNameValid && isSurnameValid && isEmailValid && isNumberValid && isPasswordValid) {
+        saveData.push(data)
+        localStorage.setItem(SAVE_DATA, JSON.stringify(saveData))
 
-    const saveData = {
-        name: inputNameValue,
-        surname: inputSurNameValue,
-        email: inputEmailValue,
-        number: inputNumberValue,
-        password: inputPasswordValue
+        renderSaveData()
+        
+        inputName.value = ''
+        inputSurName.value = ''
+        inputEmail.value = ''
+        inputNumber.value = ''
+        inputPassword.value = ''
     }
+
     
-    localStorage.setItem(SAVE_DATA, JSON.stringify(saveData))
-    } else {
-        alert("Будь ласка введіть правильні дані!")
-    }
 }
 function renderSaveData() {
-    const rawData = localStorage.getItem(SAVE_DATA)
+    listDiv.innerHTML = ''
+    const savedData = JSON.parse(localStorage.getItem(SAVE_DATA)) || []
 
-    if (!rawData) return
+    savedData.forEach((data, index) => {
+        const li = document.createElement('li')
+        li.className = 'li-list'
+        li.innerHTML = `
+            <p class="p-save">Name: ${data.name}</p>
+            <p class="p-save">Surname: ${data.surname}</p>
+            <p class="p-save">Email: ${data.email}</p>
+            <p class="p-save">Number: ${data.number}</p>
+            <p class="p-save">Password: ${data.password}</p>
+        `
+        listDiv.appendChild(li)
 
-    const saveData = JSON.parse(rawData)
-
-    if (saveData.name) inputName.value = saveData.name
-    if (saveData.surname) inputSurName.value = saveData.surname
-    if (saveData.email) inputEmail.value = saveData.email
-    if (saveData.number) inputNumber.value = saveData.number
-    if (saveData.password) inputPassword.value = saveData.password
+        const deleteLi = li
+        deleteLi.addEventListener('click', function () {
+            if (!confirm('Ви точно хочете видалити?')) {
+                return
+            } else {
+                savedData.splice(index, 1)
+                localStorage.setItem(SAVE_DATA, JSON.stringify(savedData))
+                renderSaveData()
+            }
+        })
+    })
+    
 }
 renderSaveData()
+
+function buttonListOpen() {
+    const listDiv = document.querySelector('.list-div')
+    const menuDiv = document.querySelector('.menu-div')
+    const closeDiv = document.querySelector('.close-div')
+
+    if (listDiv.style.display === "none" || !listDiv.style.display) {
+        listDiv.style.display = "flex"
+        menuDiv.style.display = "none"
+        closeDiv.style.display = "flex"
+    } else {
+        listDiv.style.display = "none"
+        closeDiv.style.display = "none"
+    }
+}
+function buttonListClose() {
+    const listDiv = document.querySelector('.list-div')
+    const menuDiv = document.querySelector('.menu-div')
+    const closeDiv = document.querySelector('.close-div')
+
+    listDiv.style.display = "none"
+    menuDiv.style.display = "flex"
+    closeDiv.style.display = "none"
+}

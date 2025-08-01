@@ -51,10 +51,15 @@ li {
     background-color: rgba(0, 0, 0, 0.342);
     color: white;
 }
+.ul-buttons {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+}
 .button-save {
     width: 150px;
     height: 40px;
-    margin-top: 10px;
     border-radius: 5px;
     border: none;
     background-color: rgba(0, 0, 0, 0.342);
@@ -66,4 +71,78 @@ li {
 .button-save:hover {
     background-color: rgba(0, 0, 0, 0.5);
     transition: background-color 0.3s ease;
+}
+.button-list {
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    background-color: rgba(0, 0, 0, 0.342);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 10px;
+}
+.button-list:hover {
+    background-color: rgba(0, 0, 0, 0.5);
+    transition: background-color 0.3s ease;
+}
+.svg-list {
+    width: 32px;
+    fill: white;
+}
+.list-div {
+    width: 400px;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.138);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+    z-index: 2;
+}
+.li-list {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    font-size: 16px;
+    font-family: "Roboto", sans-serif;
+    text-align: center;
+    cursor: pointer;
+}
+.close-div {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    display: none;
+    justify-content: end;
+    padding: 10px;
+    z-index: 1;
+}
+.button-close {
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    border: none;
+    background-color: rgba(62, 62, 62, 0.342);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.button-close:hover {
+    background-color: rgba(62, 62, 62, 0.5);
+    transition: background-color 0.3s ease;
+}
+.svg-close {
+    width: 32px;
+    fill: white;
 }
